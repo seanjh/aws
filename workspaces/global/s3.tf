@@ -8,9 +8,9 @@ resource "aws_s3_account_public_access_block" "public_access_block" {
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "117936299034-terraform-state"
 
-  #lifecycle {
-  #prevent_destroy = true
-  #}
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_s3_bucket_versioning" "terraform_state" {

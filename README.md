@@ -25,8 +25,8 @@ it ever need to be repeated.
 
 ```
 $ cd workspaces/management
-$ AWS_ACCESS_KEY_ID=example AWS_SECRET_ACCESS_KEY=secret terraform init`
-$ AWS_ACCESS_KEY_ID=example AWS_SECRET_ACCESS_KEY=secret terraform apply`
+$ AWS_ACCESS_KEY_ID=example AWS_SECRET_ACCESS_KEY=secret terraform init
+$ AWS_ACCESS_KEY_ID=example AWS_SECRET_ACCESS_KEY=secret terraform apply
 ```
 
 - Delete the root user access key
@@ -36,20 +36,20 @@ $ AWS_ACCESS_KEY_ID=example AWS_SECRET_ACCESS_KEY=secret terraform apply`
   the __local__ backend (commend out the __s3__ backend configuration)
 
 ```
-$ aws-vault exec mine.main.admin -- terraform init`
-$ aws-vault exec mine.main.admin -- terraform apply`
+$ aws-vault exec mine.main.admin -- terraform init
+$ aws-vault exec mine.main.admin -- terraform apply
 ```
 
 - Migrate the `workspace/global` state to the __s3__ backend (uncomment the __s3__ backend
   configuration in `workspaces/global/main.tf`)
 
 ```
-$ aws-vault exec mine.main.admin -- terraform init`
+$ aws-vault exec mine.main.admin -- terraform init -migrate-state -backend-config=../backend.hcl
 ```
 
 - Migrate the `workspace/management` state to the __s3__ backend (uncomment the __s3__ backend
   configuration in `workspaces/management/main.tf`)
 
 ```
-$ aws-vault exec mine.main.admin -- terraform init`
+$ aws-vault exec mine.main.admin -- terraform init -migrate-state -backend-config=../backend.hcl
 ```

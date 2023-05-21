@@ -9,10 +9,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = "117936299034-terraform-state"
-    key            = "management/terraform.tfstate"
-    dynamodb_table = "terraform-locks"
-    encrypt        = true
+    key = "management/terraform.tfstate"
   }
 
   required_version = "~> 1.4.0"

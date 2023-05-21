@@ -8,7 +8,7 @@ resource "aws_dynamodb_table" "terraform_locks" {
     type = "S"
   }
 
-  #lifecycle {
-  #prevent_destroy = true
-  #}
+  lifecycle {
+    prevent_destroy = true
+  }
 }
