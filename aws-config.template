@@ -1,0 +1,37 @@
+[profile mine.main.admin]
+sso_session = mine
+sso_account_id = 117936299034
+sso_role_name =  AdministratorAccess
+role_session_name = session_sean
+region = us-east-2
+output = json
+
+[profile mine.main.read]
+sso_session = mine
+sso_account_id = 117936299034
+sso_role_name = ReadOnlyAccess
+role_session_name = session_sean
+region = us-east-2
+output = json
+
+[profile mine.blog.admin]
+sso_session = mine
+sso_role_name = PowerUserAccess
+sso_account_id = 255925763613
+role_session_name = session_sean
+region = us-east-2
+output = json
+
+[profile mine.blog.read]
+sso_session = mine
+sso_role_name = ReadOnlyAccess
+sso_account_id = 255925763613
+role_session_name = session_sean
+region = us-east-2
+output = json
+
+[sso-session mine]
+sso_region = us-east-2
+sso_start_url = https://d-9a67056a56.awsapps.com/start
+
+# vim: ft=cfg
