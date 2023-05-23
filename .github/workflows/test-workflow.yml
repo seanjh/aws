@@ -7,7 +7,7 @@ env:
   AWS_REGION: "us-east-2"
 # permission can be added at job level or workflow level
 permissions:
-  id-token: read
+  id-token: write
   contents: read
 jobs:
   S3ListBuckets:
