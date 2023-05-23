@@ -1,4 +1,4 @@
-resource "aws_iam_openid_connect_provider" "github" {
+resource "aws_iam_openid_connect_provider" "github_oidc" {
   url = "https://token.actions.githubusercontent.com"
 
   client_id_list = [
@@ -6,4 +6,32 @@ resource "aws_iam_openid_connect_provider" "github" {
   ]
 
   thumbprint_list = ["6938FD4D98BAB03FAADB97B34396831E3780AEA1"]
+}
+
+data "aws_iam_policy_document" "github_oidc" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:seanjh/aws:*"]
+    }
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.github_oidc.arn]
+    }
+  }
+}
+
+resource "aws_iam_role" "github_oidc" {
+  name               = "GitHubOIDCAccess"
+  assume_role_policy = data.aws_iam_policy_document.github_oidc.json
 }
