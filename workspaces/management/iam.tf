@@ -5,7 +5,7 @@ resource "aws_iam_openid_connect_provider" "github_oidc" {
     "sts.amazonaws.com"
   ]
 
-  thumbprint_list = ["6938FD4D98BAB03FAADB97B34396831E3780AEA1"]
+  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
 }
 
 data "aws_iam_policy_document" "github_oidc" {
@@ -32,6 +32,8 @@ data "aws_iam_policy_document" "github_oidc" {
 }
 
 resource "aws_iam_role" "github_oidc" {
-  name               = "GitHubOIDCAccess"
-  assume_role_policy = data.aws_iam_policy_document.github_oidc.json
+  name                = "GitHubOIDCAccess"
+  assume_role_policy  = data.aws_iam_policy_document.github_oidc.json
+  managed_policy_arns = []
+  inline_policy {}
 }
