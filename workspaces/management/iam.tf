@@ -31,9 +31,13 @@ data "aws_iam_policy_document" "github_oidc" {
   }
 }
 
+data "aws_iam_policy" "read_only" {
+  arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+}
+
 resource "aws_iam_role" "github_oidc" {
   name                = "GitHubOIDCAccess"
   assume_role_policy  = data.aws_iam_policy_document.github_oidc.json
-  managed_policy_arns = []
+  managed_policy_arns = [data.aws_iam_policy.read_only.arn]
   inline_policy {}
 }
