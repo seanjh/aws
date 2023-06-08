@@ -9,7 +9,6 @@ permissions:
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
-    needs: checkout
     strategy:
       matrix:
         workspace: ["workspaces/global", "workspaces/management"]
