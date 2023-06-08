@@ -23,7 +23,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
       - run: terraform -chdir=${{matrix.workspace }} init -backend-config=../backend.hcl
       - run: |-
-          terraform -chdir=${{matrix.workspace }} plan --no-color --input=false
+          terraform -chdir=${{matrix.workspace }} plan -no-color -input=false
       - run: |
           echo "Terraform plan :spiral_note_pad: - ${{ matrix.workspace }}" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.plan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
