@@ -26,11 +26,9 @@ jobs:
           role-to-assume: arn:aws:iam::117936299034:role/GitHubOIDCAccess
           role-session-name: GitHub_Actions_Session
           aws-region: ${{ env.AWS_REGION }}
-      - run: terraform init -backend-config=../backend.hcl
-        working-directory: ${{ matrix.workspace }}
+      - run: terraform init -chdir=${{ matrix.workspace }} -backend-config=../backend.hcl
       - run: |-
-          terraform plan --no-color --input=false
-        working-directory: ${{ matrix.workspace }}
+          terraform plan -chdir=${{matrix.workspace }} --no-color --input=false
       - run: |
           echo "Terraform plan :spiral_note_pad: - ${{ matrix.workspace }}" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.plan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
