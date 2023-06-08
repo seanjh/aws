@@ -1,0 +1,29 @@
+name: Terraform plan
+on:
+  push
+env:
+  AWS_REGION: "us-east-2"
+permissions:
+  id-token: write
+  contents: read
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        workspace: ["workspaces/global", "workspaces/management"]
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::117936299034:role/GitHubOIDCAccess
+          role-session-name: GitHub_Actions_Session
+          aws-region: ${{ env.AWS_REGION }}
+      - run: terraform -chdir=${{matrix.workspace }} init -backend-config=../backend.hcl
+      - run: |-
+          terraform -chdir=${{matrix.workspace }} plan -no-color -input=false
+      - run: |
+          echo "Terraform plan :spiral_note_pad: - ${{ matrix.workspace }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.plan.outputs.stdout }}" >> $GITHUB_STEP_SUMMARY
